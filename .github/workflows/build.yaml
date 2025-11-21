@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: jagholin/dosbox-gcc:latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Required Tools
+        run: |
+          apt-get update
+          apt-get install -y cmake upx
+
+      - name: Configure project
+        run: cmake -B build -S src -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build project
+        run: cmake --build build
+
+      - name: Compress output binary
+        run: upx -9 build/nwvmt.exe
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build/*.exe
+
