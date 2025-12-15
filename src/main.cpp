@@ -44,10 +44,9 @@ auto test_video_memory(const std::uint16_t mode_id,
                        const std::uint8_t num_chips) {
 
     const auto fb = vbe::framebuffer{mode_id};
-    const auto total_size = vbe::get_total_memory_size();
+    const auto size = vbe::get_total_memory_size();
     const auto bus_width_in_bytes = bus_width / bits_per_byte;
     const auto bytes_per_chip = bus_width_in_bytes / num_chips;
-    const auto size = total_size - (total_size % bus_width_in_bytes);
 
     auto result = std::vector<bool>(num_chips, true);
     auto block = std::vector<std::uint8_t>(bus_width_in_bytes * 1024u, 0u);
@@ -126,7 +125,7 @@ void run(const std::uint16_t bus_width, const std::uint8_t num_chips) {
 
 int main(int argc, const char* argv[]) {
     try {
-        log("Necoware's Video Memory Tester");
+        log("Necroware's Video Memory Tester");
         log("Version " PROJECT_VERSION " (build date " PROJECT_BUILD_DATE ")\n");
 
         const auto params = std::vector<cli::param_decl>{
