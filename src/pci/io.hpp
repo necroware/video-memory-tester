@@ -16,24 +16,16 @@
 
 #pragma once
 
-#include <cstdio>
-#include <string>
+#include "types.hpp"
 
-namespace log_internal {
+namespace pci {
 
-template <typename T>
-auto wrap_arg(T&& arg) {
-    return std::forward<T>(arg);
-}
+auto read_byte(const address_t& addr, const std::uint16_t reg) -> std::uint8_t;
+auto read_word(const address_t& addr, const std::uint16_t reg) -> std::uint16_t;
+auto read_dword(const address_t& addr, const std::uint16_t reg) -> std::uint32_t;
 
-inline const char* wrap_arg(const std::string& s) { return s.c_str(); }
-inline const char* wrap_arg(std::string_view s) { return s.data(); }
+void write_byte(const address_t& addr, const std::uint16_t reg, std::uint8_t val);
+void write_word(const address_t& addr, const std::uint16_t reg, std::uint16_t val);
+void write_dword(const address_t& addr, const std::uint16_t reg, std::uint32_t val);
 
-} // namespace log_internal
-
-template <typename... Args>
-void log(const char* fmt, Args&&... args) {
-    std::printf(fmt, log_internal::wrap_arg(std::forward<Args>(args))...);
-    std::puts("");
-}
-
+} // namespace pci

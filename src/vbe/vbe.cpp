@@ -48,6 +48,7 @@ struct __attribute__((packed)) controller_info_t {
     std::uint8_t reserved[222];
     std::uint8_t oem_data[256];
 };
+static_assert(sizeof(controller_info_t) == 512);
 
 struct __attribute__((packed)) mode_info_t {
     std::uint16_t mode_attributes;
@@ -141,7 +142,7 @@ void reset_mode() {
 oem_info_t get_oem_info() {
     const auto& info = internal::get_controller_info();
     const auto read_string = [](dpmi::farptr_t addr) -> std::string {
-        char temp[64u];
+        char temp[128u];
         dosmemget(dpmi::to_real_addr(addr), sizeof(temp), temp);
         temp[sizeof(temp) - 1] = 0;
         return temp;
@@ -152,7 +153,7 @@ oem_info_t get_oem_info() {
             read_string(info.oem_product_rev_ptr)};
 }
 
-std::size_t get_total_memory_size() {
+std::uint32_t get_total_memory_size() {
     return internal::get_controller_info().total_memory * 64u * 1024u;
 }
 
