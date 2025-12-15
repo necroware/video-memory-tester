@@ -27,7 +27,7 @@ user and is used for the result calculations.
 # Current limitations
 
 - Needs pure DOS without any memory managers loaded
-- Supports only VBE 2.0 capable grpahics cards
+- Supports only VBE 2.0 capable graphics cards
 - The memory chips on the card have to be at least 8-bit or multiple of 8-bits
 - No graphical interface or user feedback during the tests
 
