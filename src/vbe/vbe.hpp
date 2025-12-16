@@ -57,7 +57,7 @@ private:
 };
 
 oem_info_t get_oem_info();
-std::size_t get_total_memory_size();
+std::uint32_t get_total_memory_size();
 std::vector<mode_info_t> get_modes();
 void reset();
 

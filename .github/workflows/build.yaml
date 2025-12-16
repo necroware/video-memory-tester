@@ -27,7 +27,7 @@ jobs:
         run: cmake --build build
 
       - name: Compress output binary
-        run: upx -9 build/nwvmt.exe
+        run: upx -9 build/*.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
